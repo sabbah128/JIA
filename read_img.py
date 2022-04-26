@@ -6,7 +6,8 @@ from matplotlib import cm
 from PIL import Image
 
 
-path='E:\\Test-programing\\JIA\\get_images\\dicom_img'
+path='E:\\Test-programing\\JIA\\JIA_github_repo\\JIA\\dicom_img'
+
 names, img_path = [], []
 
 
