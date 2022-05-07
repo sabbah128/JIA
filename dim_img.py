@@ -1,10 +1,9 @@
-from PIL import Image
-import glob
-import numpy as np
+from os import listdir
+from matplotlib import image
 
 
-image_list = []
-for filename in glob.glob('E:\Test-programing\JIA\JIA_github_repo\JIA\Images\*.*'):
-    im=np.asarray(Image.open(filename))
-    print(im.shape)
-
+loaded_images = list()
+for filename in listdir('Images'):
+    img_data = image.imread('Images/' + filename)
+    loaded_images.append(img_data)
+    print(' %s %s' % (filename.split('.')[0], img_data.shape))
