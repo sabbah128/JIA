@@ -24,6 +24,7 @@ for i in range(len(img_path)):
     img_shape = img.shape
 
     if img_shape == (2, 128, 128) or img_shape == (2, 256, 256):
+        # img[0] = img[0, :, ::-1] # mirror
         plt.imsave(folder + names[i] + '.' + str(i) + '.1.jpg', img[0], cmap=cm.gray)
         plt.imsave(folder + names[i] + '.' + str(i) + '.2.jpg', img[1], cmap=cm.gray)
         if img_shape == (2, 256, 256):
