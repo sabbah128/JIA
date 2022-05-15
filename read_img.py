@@ -6,11 +6,8 @@ from matplotlib import cm
 from PIL import Image
 
 
-path = 'E:\\Test-programing\\JIA\\JIA_github_repo\\JIA\\dicom_img'
-# path = 'E:\\Test-programing\\JIA\\JIA_github_repo\\JIA\\test_image'
-
+path = 'E:\\GitHub\\JIA\\All_Images'
 names, img_path = [], []
-
 
 for (root, dirs, file) in os.walk(path):
     for f in file:
