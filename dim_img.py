@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 
 
 folder_save = 'knee_augmentation\\'
-folder_dir = 'E:\\Test-programing\\JIA\\JIA_github_repo\\JIA\\knee\\'
+folder_dir = 'E:\\GitHub\\JIA\\knee\\'
 names = []
 
 for images in os.listdir(folder_dir):
