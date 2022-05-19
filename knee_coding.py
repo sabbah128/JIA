@@ -3,6 +3,7 @@ import os
 from PIL import Image
 import numpy as np
 from keras.preprocessing.image import img_to_array
+import model
 
 
 folder_read = '.\\knee_augmentation\\'
@@ -26,3 +27,4 @@ imgs = np.array(imgs)
 print(lbl.shape)
 print(imgs.shape)
 
+model.model_keras(imgs, lbl)
