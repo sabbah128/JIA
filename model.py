@@ -49,16 +49,16 @@ def model_keras(imgs, lbl):
 
     model.summary()
 
-    model.compile(optimizer='adam', loss='binary_crossentropy')
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
     i = 1
     for train, test in kfold.split(imgs):
         print('fold %i ...' %i)
         train_X, test_X = imgs[train], imgs[test]
         train_y, test_y = lbl[train], lbl[test]
-        model.fit(train_X, train_y, batch_size=128, epochs=15, shuffle=True, verbose=0)  
-        scores = model.evaluate(test_X, test_y, verbose=0)
-        print(scores) 
+        model.fit(train_X, train_y, batch_size=128, epochs=15, shuffle=True, verbose=2)  
+        # scores = model.evaluate(test_X, test_y, verbose=0)
+        # print(scores) 
         yhat = model.predict(test_X)
         fpr, tpr, _ = roc_curve(test_y[:, 1], yhat[:, 1])
         tprs.append(np.interp(mean_fpr, fpr, tpr))
