@@ -1,3 +1,4 @@
+# 2
 import os
 from PIL import Image
 from numpy import expand_dims
@@ -7,8 +8,11 @@ from matplotlib import pyplot as plt
 
 
 
-folder_save = 'knee_augmentation\\'
-folder_dir = 'E:\\GitHub\\JIA\\knee\\'
+folder_save = 'knee_augmentation'
+if not os.path.isdir(folder_save):
+    os.mkdir(folder_save)
+    
+folder_dir = '.\\knee\\'
 names = []
 
 for images in os.listdir(folder_dir):
@@ -23,7 +27,7 @@ for images in os.listdir(folder_dir):
     images = images.split('.')[0]
     if images not in names:
         ii = 0
-        print(' >>>>>> ', images)
+        print('>>> ', images, ' <<<')
         while True:
             l = input('Left Label  (N=0, P=1) :')
             if (l in '01'):
@@ -35,6 +39,6 @@ for images in os.listdir(folder_dir):
     for i in range(9):
         batch = it.next()
         image = batch[0].astype('uint8')
-        plt.imsave(folder_save+images+'.'+str(ii)+str(i)+'.'+str(r)+str(l)+'.jpg', image)
+        plt.imsave(folder_save+'\\'+images+'.'+str(ii)+str(i)+'.'+str(r)+str(l)+'.jpg', image)
     ii = 0
     names.append(images)
