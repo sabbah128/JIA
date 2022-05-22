@@ -19,8 +19,9 @@ for images in os.listdir(folder_dir):
     img = Image.open(folder_dir + images)
     data = img_to_array(img)
     samples = expand_dims(data, 0)
-    datagen = ImageDataGenerator(height_shift_range=0.2, 
-                                rotation_range=10, 
+    datagen = ImageDataGenerator(height_shift_range=[0.2, 0.4], 
+                                width_shift_range=[0.2, 0.4],
+                                rotation_range=[10, 20], 
                                 brightness_range=[0.6,1.0], 
                                 zoom_range=[0.5,1.0])
     it = datagen.flow(samples, batch_size=1)
