@@ -6,7 +6,7 @@ from PIL import Image
 
 
 def read_img():
-    print('read images are running...')
+    
     path = '.\\All_Images'
     folder_img = 'Images'
     names, img_path = [], []

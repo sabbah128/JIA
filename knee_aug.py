@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 
 
 def augmentation():
-    print('knee augmentation is running...')
+
     folder_save = 'knee_augmentation'
     if not os.path.isdir(folder_save):
         os.mkdir(folder_save)
@@ -36,7 +36,7 @@ def augmentation():
                                     zoom_range=[0.6,1.0])
         it = datagen.flow(samples, batch_size=1)
 
-        for i in range(5):
+        for i in range(4):
             batch = it.next()
             image = batch[0].astype('uint8')
             plt.imsave(folder_save+'\\'+images+'.'+images.split('.')[-2]+str(i)+'.'+str(r)+str(l)+'.jpg', image)
