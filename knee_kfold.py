@@ -1,64 +1,33 @@
+from statistics import mean
 import numpy as np
-# import tensorflow as tf
-from keras.models import Sequential
 from sklearn.model_selection import KFold
-from keras.layers import BatchNormalization
 from sklearn.metrics import roc_auc_score, auc
-from keras.layers.convolutional import Conv2D
-from keras.layers import Dense, Dropout, Flatten, MaxPool2D
 from sklearn.metrics import roc_curve, precision_recall_curve
 import matplotlib.pyplot as plt
 
 
-def model_keras(imgs, lbl):
-    print('run model_keras')
+def model_kfold(model, imgs, lbl):    
+    print('Kfold is running...')
 
-    dropout = 0.4
-    n_splits = 2
+    kfold = KFold(n_splits=2, shuffle=True, random_state=42)
     figure, (ax1, ax2) = plt.subplots(1, 2, figsize=(12,6))
 
-    a, p, r, acc, cm = [], [], [], [], []
+    a, p, r, acc, cm, scores = [], [], [], [], [], []
     prs, stdprs, aucs, tprs = [], [], [], []
     mean_recall = np.linspace(0, 1, 100)
     mean_fpr = np.linspace(0, 1, 100)
-
-    kfold = KFold(n_splits=n_splits, shuffle=True, random_state=42)
-
-    model = Sequential()
-    model.add(Conv2D(filters=8, kernel_size=(2, 2), activation='relu', padding='same', input_shape=(128, 128, 3)))
-    model.add(BatchNormalization())
-
-    model.add(Conv2D(filters=16, kernel_size=(2, 2), activation='relu', padding='same'))
-    model.add(MaxPool2D(pool_size=(2, 2)))
-
-    model.add(Conv2D(filters=32, kernel_size=(2, 2), activation='relu', padding='same'))
-    model.add(Dropout(dropout))
-
-    model.add(Conv2D(filters=32, kernel_size=(2, 2), activation='relu', padding='same'))
-    model.add(BatchNormalization())
-    model.add(MaxPool2D(pool_size=(2, 2)))
-    model.add(Dropout(dropout))
-
-    model.add(Flatten())
-    model.add(Dropout(dropout))
-    model.add(Dense(units=250, activation='relu'))
-    model.add(Dropout(dropout))
-    model.add(Dense(units=50, activation='relu'))
-    model.add(Dropout(dropout))
-    model.add(Dense(4, activation='softmax'))
-
-    model.summary()
-
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
     i = 1
     for train, test in kfold.split(imgs):
         print('fold %i ...' %i)
         train_X, test_X = imgs[train], imgs[test]
         train_y, test_y = lbl[train], lbl[test]
-        model.fit(train_X, train_y, batch_size=128, epochs=15, shuffle=True, verbose=2)  
-        # scores = model.evaluate(test_X, test_y, verbose=0)
-        # print(scores) 
+        model.fit(train_X, train_y, batch_size=128, epochs=1, shuffle=True, verbose=2)
+         
+        score = model.evaluate(test_X, test_y, verbose=0)
+        print('Accuracy is : ', score)
+        scores.append(score)
+
         yhat = model.predict(test_X)
         fpr, tpr, _ = roc_curve(test_y[:, 1], yhat[:, 1])
         tprs.append(np.interp(mean_fpr, fpr, tpr))
@@ -71,6 +40,7 @@ def model_keras(imgs, lbl):
         stdprs.append(pr_auc)
         ax2.plot(recall, precision, lw=2, alpha=0.5)
         i += 1
+    print('Average Accuracy : ', np.mean(scores))
 
     # ROC
     ax1.plot([0,1],[0,1], linestyle = '--',lw = 1, color = 'red', label='No Skill', alpha=0.6)
@@ -95,3 +65,4 @@ def model_keras(imgs, lbl):
     ax2.legend(loc = 'best')
 
     plt.show()
+    print('Kfold is done.')

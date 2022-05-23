@@ -1,45 +1,45 @@
-# 2
 import os
 from PIL import Image
+import pandas as pd
 from numpy import expand_dims
 from keras.preprocessing.image import img_to_array
 from keras.preprocessing.image import ImageDataGenerator
 from matplotlib import pyplot as plt
 
 
+def augmentation():
+    print('knee augmentation is running...')
+    folder_save = 'knee_augmentation'
+    if not os.path.isdir(folder_save):
+        os.mkdir(folder_save)
+    lbl = pd.read_excel('.\\knee_name_lbl.xlsx', header=0)        
+    folder_dir = '.\\knee\\'
+    names = []
 
-folder_save = 'knee_augmentation'
-if not os.path.isdir(folder_save):
-    os.mkdir(folder_save)
-    
-folder_dir = '.\\knee\\'
-names = []
 
-for images in os.listdir(folder_dir):
-    img = Image.open(folder_dir + images)
-    data = img_to_array(img)
-    samples = expand_dims(data, 0)
-    datagen = ImageDataGenerator(height_shift_range=[0.2, 0.4], 
-                                width_shift_range=[0.2, 0.4],
-                                rotation_range=[10, 20], 
-                                brightness_range=[0.6,1.0], 
-                                zoom_range=[0.5,1.0])
-    it = datagen.flow(samples, batch_size=1)
-    images = images.split('.')[0]
-    if images not in names:
-        ii = 0
-        print('>>> ', images, ' <<<')
-        while True:
-            l = input('Left Label  (N=0, P=1) :')
-            if (l in '01'):
-                r = input('Right Label (N=0, P=1) :')
-                if r in '01':
-                    break
-    else :
-        ii = 1
-    for i in range(9):
-        batch = it.next()
-        image = batch[0].astype('uint8')
-        plt.imsave(folder_save+'\\'+images+'.'+str(ii)+str(i)+'.'+str(r)+str(l)+'.jpg', image)
-    ii = 0
-    names.append(images)
+    for images in os.listdir(folder_dir):
+        indx = next(iter(lbl[lbl['names']==images.split('.')[0].lower()].index), 'no match')
+        if indx == 'no match':
+            print('no mathc '+ images.split('.')[0].lower())
+            exit()
+        else:
+            l = lbl.iloc[int(indx), 1]
+            r = lbl.iloc[int(indx), 2]
+
+        img = Image.open(folder_dir + images)
+        data = img_to_array(img)
+        samples = expand_dims(data, 0)
+        datagen = ImageDataGenerator(height_shift_range=0.2, 
+                                    width_shift_range=0.2,
+                                    rotation_range=10, 
+                                    brightness_range=[0.4,1.0], 
+                                    zoom_range=[0.6,1.0])
+        it = datagen.flow(samples, batch_size=1)
+
+        for i in range(5):
+            batch = it.next()
+            image = batch[0].astype('uint8')
+            plt.imsave(folder_save+'\\'+images+'.'+images.split('.')[-2]+str(i)+'.'+str(r)+str(l)+'.jpg', image)
+
+        names.append(images)
+    print('knee augmentation is done.')
