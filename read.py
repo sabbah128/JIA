@@ -1,3 +1,4 @@
+from asyncore import read
 import os
 import pydicom
 import matplotlib.pyplot as plt
@@ -9,6 +10,7 @@ def read_img():
     
     path = '.\\All_Images'
     folder_img = 'Images'
+    folder_unShape = 'unShape'
     names, img_path = [], []
 
     for (root, dirs, file) in os.walk(path):
@@ -17,8 +19,14 @@ def read_img():
                 names.append(f.split('.')[0])
                 img_path.append(root+"\\"+f)
 
-    if not os.path.isdir(folder_img):
+    if os.path.isdir(folder_img):
+        print('read images are done.')
+        img_edit()
+    else:
         os.mkdir(folder_img)
+
+    if not os.path.isdir(folder_unShape):
+        os.mkdir(folder_unShape)    
 
     for i in range(len(img_path)):
         img = pydicom.dcmread(img_path[i])
@@ -26,9 +34,9 @@ def read_img():
         img_shape = img.shape
 
         if img_shape == (2, 128, 128) or img_shape == (2, 256, 256):
-            # img[0, :, ::-1] => mirror
-            plt.imsave(folder_img+'\\'+ names[i] + '.' + str(i) + '.1.jpg', img[0, :, ::-1], cmap=cm.gray)
-            plt.imsave(folder_img+'\\'+ names[i] + '.' + str(i) + '.2.jpg', img[1], cmap=cm.gray)
+            # img[1, :, ::-1] => mirror            
+            plt.imsave(folder_img+'\\'+ names[i] + '.' + str(i) + '.1.jpg', img[0], cmap=cm.gray)
+            plt.imsave(folder_img+'\\'+ names[i] + '.' + str(i) + '.2.jpg', img[1, :, ::-1], cmap=cm.gray)
             if img_shape == (2, 256, 256):
                 im1 = Image.open(folder_img+'\\'+ names[i] + '.' + str(i) + '.1.jpg')
                 im1 = im1.resize((128, 128))
@@ -37,6 +45,10 @@ def read_img():
                 im2 = Image.open(folder_img+'\\'+ names[i] + '.' + str(i) + '.2.jpg')
                 im2 = im2.resize((128, 128))
                 im2.save(folder_img+'\\'+ names[i] + '.' + str(i) + '.2.jpg', mode='L')
+        else:
+            plt.imsave(folder_unShape+'\\'+ names[i] + '.' + str(i) + '.1.jpg', img[0], cmap=cm.gray)
+            plt.imsave(folder_unShape+'\\'+ names[i] + '.' + str(i) + '.2.jpg', img[1, :, ::-1], cmap=cm.gray)
+
     print('read images are done.')
 
 def img_edit():
@@ -47,3 +59,5 @@ def img_edit():
     else:
         print('This section must be checked manually, please proceed.')
         return False
+
+# read_img()
