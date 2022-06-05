@@ -5,11 +5,10 @@ import knee_codding
 import knee_model
 import knee_kfold
 
+
 if __name__ == '__main__' :
 
     read.read_img()
-    if not read.img_edit():
-        exit()
     
     # knee_label.names_excl()
     # if not knee_label.labeled():        

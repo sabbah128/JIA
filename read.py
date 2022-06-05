@@ -1,4 +1,3 @@
-from asyncore import read
 import os
 import pydicom
 import matplotlib.pyplot as plt
@@ -20,8 +19,8 @@ def read_img():
                 img_path.append(root+"\\"+f)
 
     if os.path.isdir(folder_img):
-        print('read images are done.')
-        img_edit()
+        print('folder was exist.')
+        exit()
     else:
         os.mkdir(folder_img)
 
@@ -49,15 +48,4 @@ def read_img():
             plt.imsave(folder_unShape+'\\'+ names[i] + '.' + str(i) + '.1.jpg', img[0], cmap=cm.gray)
             plt.imsave(folder_unShape+'\\'+ names[i] + '.' + str(i) + '.2.jpg', img[1, :, ::-1], cmap=cm.gray)
 
-    print('read images are done.')
-
-def img_edit():
-    char = input('did you separate and edit knee photos ? (Y/N): ')
-    if char.lower() == 'y':
-        print('Manually separate & edit knee photos (crop, resize or remove) is done.')
-        return True
-    else:
-        print('This section must be checked manually, please proceed.')
-        return False
-
-# read_img()
+    print('read all images are done.')
