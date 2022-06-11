@@ -10,8 +10,10 @@ def names_excl():
     for images in os.listdir(folder_dir):
         names.append(images.split('.')[0].lower())
 
+    print(len(names))
     names = list(set(names))
     names.sort()
+    print(len(names))
 
     df = pd.DataFrame(names, columns=['names'])
     writer = pd.ExcelWriter('knee_name.xlsx')

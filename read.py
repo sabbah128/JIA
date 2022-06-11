@@ -8,6 +8,7 @@ from PIL import Image
 def read_img():
     
     path = '.\\All_Images'
+    # path = '.\\crop_knee'
     folder_img = 'Images'
     folder_unShape = 'unShape'
     names, img_path = [], []
