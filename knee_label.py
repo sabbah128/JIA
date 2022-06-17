@@ -1,25 +1,27 @@
 import os
 import pandas as pd
+# from collections import Counter
 
 
 def names_excl():
     
-    folder_dir = '.\\knee\\'
+    folder_dir = '.\\ankle\\'
     names = []
 
     for images in os.listdir(folder_dir):
         names.append(images.split('.')[0].lower())
 
-    print(len(names))
+    # print(Counter(names))
+    print(len(names))    
     names = list(set(names))
     names.sort()
     print(len(names))
 
     df = pd.DataFrame(names, columns=['names'])
-    writer = pd.ExcelWriter('knee_name.xlsx')
-    df.to_excel(writer, sheet_name='knee_names', index=False)
+    writer = pd.ExcelWriter('ankle_name.xlsx')
+    df.to_excel(writer, sheet_name='ankle_names', index=False)
     writer.save()
-    print('convert names to excel (knee_label.xlsx) are done.')
+    print('convert names to excel (ankle_label.xlsx) are done.')
 
 def labeled():
     char = input('did you labeled knee photos ? (Y/N): ')
