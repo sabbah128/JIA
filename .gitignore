@@ -35,6 +35,14 @@ unShape
 crop_knee
 ankle
 ankle_augmentation
+knee_train
+knee_test
+knee_train_aug
+ankle_train
+ankle_test
+ankle_train_aug
+Model_Summary.txt
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

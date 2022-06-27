@@ -4,9 +4,9 @@ import numpy as np
 from keras.preprocessing.image import img_to_array
 
 
-def codding():
+def codding(joint_name):
 
-    folder_read = '.\\knee_augmentation\\'
+    folder_read = '.\\'+joint_name+'_train_aug\\'
     imgs = []
     lbl = []
     dict_lbl = {
@@ -25,6 +25,5 @@ def codding():
     
     print('image shape : ', imgs_code.shape)
     print('label shape : ', lbl_code.shape)
-    print('knee_codding is done.')
     return imgs_code, lbl_code
 

@@ -1,23 +1,22 @@
 import read
-import knee_label
-import knee_aug
-import knee_codding
-import knee_model
-import knee_kfold
+import joint_img
+import split
+import joint_aug
+import joint_codding
+import joint_model
+import joint_kfold
 
 
 if __name__ == '__main__' :
 
+    joint_name = 'ankle'
     # read.read_img()
-    
-    # knee_label.names_excl()
-    # if not knee_label.labeled():        
-    #     exit()
-
-    knee_aug.augmentation()
-    # code_imgs, code_lbl = knee_codding.codding()
-    # model = knee_model.model_keras()
-    # knee_kfold.model_kfold(model, code_imgs, code_lbl)
+    # joint_img.set_label(joint_name) # arg = joint name (knee or ankle)
+    # split.train_test(joint_name)
+    # joint_aug.augmentation(joint_name)
+    # imgs, lbl = joint_codding.codding(joint_name)
+    # model = joint_model.model_keras()
+    # joint_kfold.model_kfold(model, imgs, lbl)
     print(100 * '.')
 
 

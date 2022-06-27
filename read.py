@@ -5,10 +5,8 @@ from matplotlib import cm
 from PIL import Image
 
 
-def read_img():
-    
+def read_img():    
     path = '.\\All_Images'
-    # path = '.\\crop_knee'
     folder_img = 'Images'
     folder_unShape = 'unShape'
     names, img_path = [], []
@@ -24,9 +22,7 @@ def read_img():
         exit()
     else:
         os.mkdir(folder_img)
-
-    if not os.path.isdir(folder_unShape):
-        os.mkdir(folder_unShape)    
+        os.mkdir(folder_unShape)
 
     for i in range(len(img_path)):
         img = pydicom.dcmread(img_path[i])
@@ -41,7 +37,6 @@ def read_img():
                 im1 = Image.open(folder_img+'\\'+ names[i] + '.' + str(i) + '.1.jpg')
                 im1 = im1.resize((128, 128))
                 im1.save(folder_img+'\\'+ names[i] + '.' + str(i) + '.1.jpg', mode='L')
-
                 im2 = Image.open(folder_img+'\\'+ names[i] + '.' + str(i) + '.2.jpg')
                 im2 = im2.resize((128, 128))
                 im2.save(folder_img+'\\'+ names[i] + '.' + str(i) + '.2.jpg', mode='L')
