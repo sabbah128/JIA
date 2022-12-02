@@ -10,10 +10,10 @@ def codding(joint_name):
     imgs = []
     lbl = []
     dict_lbl = {
-            '00': [1, 0, 0, 0],
-            '01': [0, 1, 0, 0],
-            '10': [0, 0, 1, 0],
-            '11': [0, 0, 0, 1]}
+            '00': [1, 0],
+            '01': [0, 1],
+            '10': [0, 1],
+            '11': [0, 1]}
 
     for images in os.listdir(folder_read):
         img = Image.open(folder_read + images)

@@ -11,8 +11,8 @@ def model_keras():
     batch_size = 64
     dropout = 0.5
     kernel_size = (5, 5)
-    leakyReLU = LeakyReLU(alpha=0.1)
-    epoch = 80
+    leakyReLU = LeakyReLU(alpha=0.3)
+    epoch = 10
 
     model = Sequential()
     model.add(Conv2D(filters=16, kernel_size=kernel_size, activation=leakyReLU, padding='same', input_shape=(128, 128, 3)))
@@ -29,7 +29,7 @@ def model_keras():
     model.add(Dropout(dropout))
     model.add(Dense(units=16, activation=leakyReLU))
     model.add(Dropout(dropout))
-    model.add(Dense(4, activation='softmax'))
+    model.add(Dense(2, activation='softmax'))
 
     with open('Model_Summary.txt', 'w') as f:
         with redirect_stdout(f):
